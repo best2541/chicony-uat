@@ -30,7 +30,7 @@ export default function Staff() {
             <Route path="/staff/maps" exact component={StaffMaps} />
             <Route path="/staff/settings" exact component={StaffSettings} />
             <Route path="/staff/tables" exact component={StaffTables} />
-            <Redirect from="/staff" to="/staff/dashboard" />
+            <Redirect from="/staff" to="/staff/tables" />
           </Switch>
           <FooterAdmin />
         </div>
