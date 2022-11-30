@@ -28,11 +28,12 @@ export default function Sidebar() {
           </Link>
           {/* User */}
           <ul className="md:hidden items-center flex flex-wrap list-none">
-            <li className="inline-block relative">
+            {/* <li className="inline-block relative">
               <NotificationDropdown />
-            </li>
+            </li> */}
             <li className="inline-block relative">
-              <UserDropdown />
+              {/* <UserDropdown /> */}
+              username
             </li>
           </ul>
           {/* Collapse */}
@@ -84,7 +85,7 @@ export default function Sidebar() {
             {/* Navigation */}
 
             <ul className="md:flex-col md:min-w-full flex flex-col list-none">
-              <li className="items-center">
+              {/* <li className="items-center">
                 <Link
                   className={
                     "text-xs uppercase py-3 font-bold block " +
@@ -104,7 +105,7 @@ export default function Sidebar() {
                   ></i>{" "}
                   Dashboard
                 </Link>
-              </li>
+              </li> */}
 
               <li className="items-center">
                 <Link
@@ -146,7 +147,7 @@ export default function Sidebar() {
                         : "text-blueGray-300")
                     }
                   ></i>{" "}
-                  Tables
+                  Employee
                 </Link>
               </li>
 

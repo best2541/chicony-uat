@@ -28,11 +28,12 @@ export default function StaffSidebar() {
           </Link>
           {/* User */}
           <ul className="md:hidden items-center flex flex-wrap list-none">
-            <li className="inline-block relative">
+            {/* <li className="inline-block relative">
               <NotificationDropdown />
-            </li>
+            </li> */}
             <li className="inline-block relative">
-              <UserDropdown />
+              {/* <UserDropdown /> */}
+              username
             </li>
           </ul>
           {/* Collapse */}
@@ -146,7 +147,7 @@ export default function StaffSidebar() {
                         : "text-blueGray-300")
                     }
                   ></i>{" "}
-                  Tables
+                  Salary
                 </Link>
               </li>
               <li className="items-center">
@@ -161,7 +162,7 @@ export default function StaffSidebar() {
                 >
                   <i
                     className={
-                      "fas fa-table mr-2 text-sm " +
+                      "fas fa-times mr-2 text-sm " +
                       (window.location.href.indexOf("/admin/tables") !== -1
                         ? "opacity-75"
                         : "text-blueGray-300")
