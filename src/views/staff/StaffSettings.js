@@ -1,8 +1,30 @@
-import React from "react";
+import { post } from "components/Api";
+import React, { useState } from "react";
 
 // components
 
 export default function StaffSettings() {
+  const [input, setInput] = useState({ oldPassword: '', newPassword: '', confirmPassword: '' })
+
+  const inputChange = (event) => {
+    const { name, value } = event.target
+    setInput({
+      ...input,
+      [name]: value
+    })
+  }
+
+  const submitClick = (event) => {
+    event.preventDefault()
+    post(`${process.env.REACT_APP_API}/staff/changepassword`, input)
+      .then(result => {
+        if (!result.data.err) {
+          alert(result.data)
+        } else {
+          alert(result.data.err)
+        }
+      })
+  }
   return (
     <>
       <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
@@ -12,7 +34,7 @@ export default function StaffSettings() {
           </div>
         </div>
         <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
-          <form>
+          <form onSubmit={submitClick}>
             <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
               Change Password
             </h6>
@@ -26,9 +48,10 @@ export default function StaffSettings() {
                     Old Password
                   </label>
                   <input
-                    type="text"
+                    name='oldPassword'
+                    type="password"
                     className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                    defaultValue="lucky.jesse"
+                    onChange={inputChange}
                   />
                 </div>
               </div>
@@ -41,9 +64,10 @@ export default function StaffSettings() {
                     New Password
                   </label>
                   <input
-                    type="email"
+                    name='newPassword'
+                    type="password"
                     className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                    defaultValue="jesse@example.com"
+                    onChange={inputChange}
                   />
                 </div>
               </div>
@@ -56,17 +80,22 @@ export default function StaffSettings() {
                     Confirm Password
                   </label>
                   <input
-                    type="text"
+                    name="confirmPassword"
+                    type="password"
                     className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                    defaultValue="Lucky"
+                    onChange={inputChange}
                   />
                 </div>
+
                 <button
-              className="bg-lightBlue-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
-              type="file"
-            >
-              Save
-            </button>
+                  className={input.newPassword == input.confirmPassword && input.newPassword != '' ? "bg-lightBlue-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" : ''}
+                  style={input.newPassword != input.confirmPassword || input.newPassword == '' ? { 'color': 'red' } : {}}
+                  type="submit"
+                  disabled={!input.newPassword == input.confirmPassword || input.newPassword == ''}
+                >
+                  {input.newPassword == input.confirmPassword && input.newPassword != '' ? 'Save' : 'New Password & Confirm Password is not match'}
+                </button>
+
               </div>
             </div>
 

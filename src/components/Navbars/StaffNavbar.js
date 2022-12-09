@@ -33,7 +33,7 @@ export default function Navbar() {
           <ul className="flex-col md:flex-row list-none items-center hidden md:flex">
             {/* <UserDropdown /> */}
             <div className="text-sm ml-2 text-white">
-              username
+              {window.localStorage.getItem('staff')}
             </div>
           </ul>
         </div>

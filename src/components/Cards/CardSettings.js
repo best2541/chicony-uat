@@ -1,8 +1,32 @@
-import React from "react";
+import axios from "axios";
+import { post } from "components/Api";
+import React, { useRef, useEffect, useState } from "react";
 
 // components
 
 export default function CardSettings() {
+  const inputRef = useRef()
+  const [date, setDate] = useState()
+  const importFile = (event) => {
+    const formData = new FormData
+    formData.append('file', event.target.files[0])
+    post(`${process.env.REACT_APP_API}/admin/import`, formData)
+      .then(result => {
+        if (!result.data.err) {
+          alert('เรียบร้อย')
+          window.location.reload()
+        }
+      })
+  }
+  useEffect(() => {
+    axios.get(`${process.env.REACT_APP_API}/admin/indexImport`, {
+      headers: {
+        authorization: `bearer ${window.localStorage.getItem('token')}`
+      }
+    }).then(result => {
+      setDate(result.data.indexImport[0]?.create_date)
+    })
+  }, [])
   return (
     <>
       <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
@@ -11,10 +35,11 @@ export default function CardSettings() {
             <h6 className="text-blueGray-700 text-xl font-bold">Settings</h6>
             <button
               className="bg-lightBlue-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
-              type="file"
+              onClick={() => inputRef.current.click()}
             >
-              import last updated : {new Date().toLocaleDateString('th')}
+              import last updated : {new Date(date).toLocaleDateString('th')}
             </button>
+            <input className="hidden" ref={inputRef} onChange={importFile} type='file' accept=".xlsx, .xls, .csv" />
           </div>
         </div>
         {/* <div className="flex-auto px-4 lg:px-10 py-10 pt-0">

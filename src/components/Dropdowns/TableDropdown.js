@@ -1,7 +1,8 @@
 import React from "react";
 import { createPopper } from "@popperjs/core";
+import { post } from "components/Api";
 
-const NotificationDropdown = () => {
+const NotificationDropdown = ({ username, setDatas }) => {
   // dropdown props
   const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
   const btnDropdownRef = React.createRef();
@@ -15,6 +16,27 @@ const NotificationDropdown = () => {
   const closeDropdownPopover = () => {
     setDropdownPopoverShow(false);
   };
+  const resetPassword = (event) => {
+    let newPassword = prompt('New Password', 'password')
+    window.confirm(`User : ${username} \nNew Password : ${newPassword}`)
+    if (newPassword)
+      post(`${process.env.REACT_APP_API}/admin/resetpassword`, {
+        password: newPassword,
+        username: username
+      }).then(result => {
+        if (!result.data.err) {
+          alert('เรียบร้อย')
+        } else {
+          alert('ไม่สำเร็จ')
+        }
+      })
+  }
+  const deleteClick = () => {
+    post(`${process.env.REACT_APP_API}/admin/delete/${username}`)
+      .then(() => {
+        setDatas(prev => prev.filter(data => data.username != username))
+      })
+  }
   return (
     <>
       <a
@@ -35,24 +57,24 @@ const NotificationDropdown = () => {
           "bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48"
         }
       >
-        <a
+        <button
           href="#pablo"
           className={
             "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
           }
-          onClick={(e) => e.preventDefault()}
+          onClick={(e) => resetPassword()}
         >
           Reset Password
-        </a>
-        <a
-          href="#pablo"
+        </button>
+        <button
+          // href="#pablo"
           className={
             "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
           }
-          onClick={(e) => e.preventDefault()}
+          onClick={(e) => deleteClick()}
         >
           Delete
-        </a>
+        </button>
       </div>
     </>
   );

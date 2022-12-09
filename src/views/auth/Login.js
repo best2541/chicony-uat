@@ -1,10 +1,29 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function Login() {
+  const [input, setInput] = useState({})
+  const [msg, setMsg] = useState('')
+  const inputChange = (event) => {
+    const { name, value } = event.target
+    setInput({
+      ...input,
+      [name]: value
+    })
+  }
   const login = (event) => {
     event.preventDefault()
-    window.location.href = '/staff'
+    axios.post(`${process.env.REACT_APP_API}/staff/login`, input)
+      .then(result => {
+        if (!result.data.err) {
+          window.localStorage.setItem('staff', input.username)
+          window.localStorage.setItem('token', result.data)
+          window.location.href = '/staff'
+        } else {
+          setMsg(result.data.err)
+        }
+      })
   }
   return (
     <>
@@ -19,9 +38,6 @@ export default function Login() {
                 <hr className="mt-6 border-b-1 border-blueGray-300" />
               </div>
               <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
-                {/* <div className="text-blueGray-400 text-center mb-3 font-bold">
-                  <small>Or sign in with credentials</small>
-                </div> */}
                 <form onSubmit={login}>
                   <div className="relative w-full mb-3">
                     <label
@@ -32,8 +48,10 @@ export default function Login() {
                     </label>
                     <input
                       type="text"
+                      name='username'
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       placeholder=""
+                      onChange={inputChange}
                     />
                   </div>
                   <div className="relative w-full mb-3">
@@ -45,8 +63,10 @@ export default function Login() {
                     </label>
                     <input
                       type="password"
+                      name='password'
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       placeholder=""
+                      onChange={inputChange}
                     />
                   </div>
                   <a href="/auth/adminlogin" className="text-blueGray-600 flex justify-center underline text-xs font-bold hover:underline">
@@ -72,6 +92,9 @@ export default function Login() {
                     >
                       Login
                     </button>
+                  </div>
+                  <div className="text-center mb-3 font-bold" style={{ 'color': 'rgb(248 113 113)' }}>
+                    <small>{msg}</small>
                   </div>
                 </form>
               </div>

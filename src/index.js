@@ -21,9 +21,13 @@ ReactDOM.render(
   <BrowserRouter>
     <Switch>
       {/* add routes with layouts */}
-      <Route path="/admin" component={Admin} />
       <Route path="/auth" component={Auth} />
-      <Route path='/staff' component={Staff} />
+      {window.localStorage.getItem('token') &&
+        <>
+          <Route path="/admin" component={Admin} />
+          <Route path='/staff' component={Staff} />
+        </>
+      }
       {/* add routes without layouts */}
       <Route path="/landing" exact component={Landing} />
       <Route path="/profile" exact component={Profile} />

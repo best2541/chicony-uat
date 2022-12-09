@@ -1,10 +1,29 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function AdminLogin() {
+  const [input, setInput] = useState({})
+  const [msg, setMsg] = useState('')
+  const inputChange = (event) => {
+    const { name, value } = event.target
+    setInput({
+      ...input,
+      [name]: value
+    })
+  }
   const login = (event) => {
     event.preventDefault()
-    window.location.href = '/admin'
+    axios.post('http://localhost:3001/admin/login', input)
+      .then(result => {
+        if (!result.data.err) {
+          window.localStorage.setItem('admin', input.username)
+          window.localStorage.setItem('token', result.data)
+          window.location.href = '/admin'
+        } else {
+          setMsg(result.data.err)
+        }
+      })
   }
   return (
     <>
@@ -31,9 +50,11 @@ export default function AdminLogin() {
                       USERNAME
                     </label>
                     <input
+                      name='username'
                       type="text"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       placeholder=""
+                      onChange={inputChange}
                     />
                   </div>
                   <div className="relative w-full mb-3">
@@ -44,9 +65,11 @@ export default function AdminLogin() {
                       PASSWORD
                     </label>
                     <input
+                      name='password'
                       type="password"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       placeholder=""
+                      onChange={inputChange}
                     />
                   </div>
                   <a href="/auth/login" className="text-blueGray-600 flex justify-center underline text-xs font-bold hover:underline">
@@ -72,6 +95,9 @@ export default function AdminLogin() {
                     >
                       admin Login
                     </button>
+                  </div>
+                  <div className="text-center mb-3 font-bold" style={{ 'color': 'rgb(248 113 113)' }}>
+                    <small>{msg}</small>
                   </div>
                 </form>
               </div>
