@@ -33,7 +33,7 @@ ReactDOM.render(
       <Route path="/profile" exact component={Profile} />
       {/* <Route path="/" exact component={Index} /> */}
       {/* add redirect for first page */}
-      <Redirect from="*" to="/auth" />
+      <Redirect from="/" to="/auth" />
     </Switch>
   </BrowserRouter>,
   document.getElementById("root")

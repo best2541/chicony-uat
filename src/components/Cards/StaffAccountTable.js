@@ -11,8 +11,11 @@ import axios from "axios";
 export default function AccountTable({ color }) {
   const [datas, setDatas] = useState([])
 
-  const exportClick = () => {
-    axios.post(`${process.env.REACT_APP_API}/staff/slip/10`, '', {
+  const exportClick = (type, date) => {
+    axios.post(`${process.env.REACT_APP_API}/staff/slip`, {
+      type: type,
+      date: date
+    }, {
       headers: {
         authorization: `bearer ${window.localStorage.getItem('token')}`
       },
@@ -84,9 +87,9 @@ export default function AccountTable({ color }) {
                       : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
                   }
                 >
-                  Date
+                  Period Date
                 </th>
-                {/* <th
+                <th
                   className={
                     "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
                     (color === "light"
@@ -94,8 +97,8 @@ export default function AccountTable({ color }) {
                       : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
                   }
                 >
-                  create date
-                </th> */}
+                  Period Type
+                </th>
                 <th
                   className={
                     "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
@@ -124,9 +127,19 @@ export default function AccountTable({ color }) {
                       {data.Period_Detail_No}
                     </span>
                   </th>
+                  <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
+                    <span
+                      className={
+                        "ml-3 font-bold " +
+                        +(color === "light" ? "text-blueGray-600" : "text-white")
+                      }
+                    >
+                      {data.Period_Master_No}
+                    </span>
+                  </td>
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
                     <button className="bg-lightBlue-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
-                      onClick={() => exportClick()}
+                      onClick={() => exportClick(data.Period_Master_No, data.Period_Detail_No)}
                     >download</button>
                   </td>
                 </tr>

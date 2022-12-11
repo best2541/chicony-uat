@@ -6,11 +6,23 @@ import React, { useRef, useEffect, useState } from "react";
 
 export default function CardSettings() {
   const inputRef = useRef()
+  const addressRef = useRef()
   const [date, setDate] = useState()
   const importFile = (event) => {
     const formData = new FormData
     formData.append('file', event.target.files[0])
     post(`${process.env.REACT_APP_API}/admin/import`, formData)
+      .then(result => {
+        if (!result.data.err) {
+          alert('เรียบร้อย')
+          window.location.reload()
+        }
+      })
+  }
+  const addressImportFile = (event) => {
+    const formData = new FormData
+    formData.append('file', event.target.files[0])
+    post(`${process.env.REACT_APP_API}/admin/addressimport`, formData)
       .then(result => {
         if (!result.data.err) {
           alert('เรียบร้อย')
@@ -32,7 +44,7 @@ export default function CardSettings() {
       <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
         <div className="rounded-t bg-white mb-0 px-6 py-6">
           <div className="text-center flex justify-between">
-            <h6 className="text-blueGray-700 text-xl font-bold">Settings</h6>
+            <h6 className="text-blueGray-700 text-xl font-bold">Salary</h6>
             <button
               className="bg-lightBlue-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
               onClick={() => inputRef.current.click()}
@@ -40,6 +52,19 @@ export default function CardSettings() {
               import last updated : {new Date(date).toLocaleDateString('th')}
             </button>
             <input className="hidden" ref={inputRef} onChange={importFile} type='file' accept=".xlsx, .xls, .csv" />
+          </div>
+        </div>
+        <br />
+        <div className="rounded-t bg-white mb-0 px-6 py-6">
+          <div className="text-center flex justify-between">
+            <h6 className="text-blueGray-700 text-xl font-bold">HQ/BR</h6>
+            <button
+              className="bg-lightBlue-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+              onClick={() => addressRef.current.click()}
+            >
+              Import
+            </button>
+            <input className="hidden" ref={addressRef} onChange={addressImportFile} type='file' accept=".xlsx, .xls, .csv" />
           </div>
         </div>
         {/* <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
