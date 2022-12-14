@@ -10,6 +10,7 @@ export default function Tables() {
   useEffect(() => {
     get(`${process.env.REACT_APP_API}/admin/employee`)
       .then(result => {
+        console.log(result.data.staff.length)
         setDatas(result.data.staff)
       })
   }, [])

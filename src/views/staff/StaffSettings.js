@@ -27,7 +27,7 @@ export default function StaffSettings() {
     post(`${process.env.REACT_APP_API}/staff/changepassword`, input)
       .then(result => {
         if (!result.data.err) {
-          alert(result.data)
+          alert('เรียบร้อย')
         } else {
           alert(result.data.err)
         }
@@ -39,7 +39,8 @@ export default function StaffSettings() {
     post(`${process.env.REACT_APP_API}/staff/updatedetail`, detail)
       .then(result => {
         if (!result.data.err) {
-          alert(result.data)
+          window.localStorage.setItem('token', result.data)
+          alert('เรียบร้อย')
         } else {
           alert('ล้มเหลว')
         }
@@ -48,7 +49,6 @@ export default function StaffSettings() {
   useEffect(() => {
     get(`${process.env.REACT_APP_API}/staff/setting`)
       .then(result => {
-        console.log(result.data)
         setDetail({
           bank: result.data.detail[0]?.bank,
           hq: result.data.detail[0]?.hq,

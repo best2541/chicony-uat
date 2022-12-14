@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 
 // components
 
 import TableDropdown from "components/Dropdowns/TableDropdown.js";
 import { Link } from "react-router-dom";
+import { get } from "components/Api";
 
 export default function AccountTable({ color, datas, setDatas }) {
+  const [page, setPage] = useState(1)
+  const autoStaff = () => {
+    get(`${process.env.REACT_APP_API}/admin/autostaff`)
+      .then(result => window.location.reload())
+  }
   return (
     <>
       <div
@@ -34,11 +40,35 @@ export default function AccountTable({ color, datas, setDatas }) {
                   NEW
                 </button>
               </Link>
+              <button
+                className="bg-yellow-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+                type="button"
+                onClick={() => autoStaff()}
+              >
+                Auto add
+              </button>
             </div>
           </div>
         </div>
         <div className="block w-full overflow-x-auto">
           {/* Projects table */}
+          <div className="pl-4 pr-4 mr-3 ml-3 mb-2 flex justify-between">
+            <button class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+              style={{ 'backgroundColor': 'gray', 'color': 'white' }}
+              onClick={() => page != 1 && setPage(page => page - 1)}
+            >
+              Previous
+            </button>
+            <div className="font-bold">
+              Page : {page}
+            </div>
+            <button class="inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+              style={{ 'backgroundColor': 'gray', 'color': 'white' }}
+              onClick={() => (page * 15) < datas.length && setPage(page => page + 1)}
+            >
+              Next
+            </button>
+          </div>
           <table className="items-center w-full bg-transparent border-collapse">
             <thead>
               <tr>
@@ -93,7 +123,7 @@ export default function AccountTable({ color, datas, setDatas }) {
               </tr>
             </thead>
             <tbody>
-              {datas.map(data => (
+              {datas.slice((page - 1) * 15, ((page * 15))).map(data => (
                 <tr>
                   <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
                     <span
