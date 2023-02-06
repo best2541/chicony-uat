@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "assets/styles/tailwind.css";
+import "assets/styles/index.css";
 
 // layouts
 
@@ -20,7 +21,6 @@ import Index from "views/Index.js";
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
-      {/* add routes with layouts */}
       <Route path="/auth" component={Auth} />
       {window.localStorage.getItem('token') &&
         <>
@@ -28,12 +28,9 @@ ReactDOM.render(
           <Route path='/staff' component={Staff} />
         </>
       }
-      {/* add routes without layouts */}
-      <Route path="/landing" exact component={Landing} />
-      <Route path="/profile" exact component={Profile} />
-      {/* <Route path="/" exact component={Index} /> */}
-      {/* add redirect for first page */}
-      <Redirect from="/" to="/auth" />
+      <Route path="/" component={Index} />
+      {/* <Route path="/landing" exact component={Landing} />
+      <Route path="/profile" exact component={Profile} /> */}
     </Switch>
   </BrowserRouter>,
   document.getElementById("root")

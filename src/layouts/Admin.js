@@ -15,6 +15,7 @@ import Maps from "views/admin/Maps.js";
 import Settings from "views/admin/Settings.js";
 import Tables from "views/admin/Tables.js";
 import Register from "views/auth/Register.js";
+import StaffTables from "views/staff/StaffTables";
 
 export default function Admin() {
   return (
@@ -31,6 +32,7 @@ export default function Admin() {
             <Route path="/admin/settings" exact component={Settings} />
             <Route path="/admin/tables" exact component={Tables} />
             <Route path="/admin/register" exact component={Register} />
+            <Route path="/admin/slip/:id" exact component={StaffTables} />
             <Redirect from="/admin" to="/admin/settings" />
           </Switch>
           <FooterAdmin />

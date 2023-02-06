@@ -196,14 +196,6 @@ export default function StaffSettings() {
                     onChange={detailChange}
                   />
                 </div>
-
-                <button
-                  className="bg-lightBlue-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
-                  type="submit"
-                >
-                  Update
-                </button>
-
               </div>
 
               <div className="w-full lg:w-6/12 px-4">
@@ -223,6 +215,14 @@ export default function StaffSettings() {
                     onChange={detailChange}
                   />
                 </div>
+              </div>
+              <div className="w-full lg:w-6/12 px-4">
+                <button
+                  className="bg-lightBlue-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+                  type="submit"
+                >
+                  Update
+                </button>
               </div>
             </div>
           </form>

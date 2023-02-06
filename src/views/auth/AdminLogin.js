@@ -72,20 +72,10 @@ export default function AdminLogin() {
                       onChange={inputChange}
                     />
                   </div>
-                  <a href="/auth/login" className="text-blueGray-600 flex justify-center underline text-xs font-bold hover:underline">
+                  {/* <a href="/auth/login" className="text-blueGray-600 flex justify-center underline text-xs font-bold hover:underline">
                     check salary?
-                  </a>
+                  </a> */}
                   <div>
-                    {/* <label className="inline-flex items-center cursor-pointer">
-                      <input
-                        id="customCheckLogin"
-                        type="checkbox"
-                        className="form-checkbox border-0 rounded text-blueGray-700 ml-1 w-5 h-5 ease-linear transition-all duration-150"
-                      />
-                      <span className="ml-2 text-sm font-semibold text-blueGray-600">
-                        Remember me
-                      </span>
-                    </label> */}
                   </div>
 
                   <div className="text-center mt-6">
@@ -103,20 +93,6 @@ export default function AdminLogin() {
               </div>
             </div>
             <div className="flex flex-wrap mt-6 relative">
-              {/* <div className="w-1/2">
-                <a
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                  className="text-blueGray-200"
-                >
-                  <small>Forgot password?</small>
-                </a>
-              </div>
-              <div className="w-1/2 text-right">
-                <Link to="/auth/register" className="text-blueGray-200">
-                  <small>Create new account</small>
-                </Link>
-              </div> */}
             </div>
           </div>
         </div>

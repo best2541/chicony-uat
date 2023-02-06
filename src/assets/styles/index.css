@@ -3,3 +3,10 @@
 @tailwind components;
 
 @tailwind utilities;
+
+.input-text {
+    height: auto;
+    border-color: transparent;
+    margin-left: 10px;
+    border-radius: 10px;
+}

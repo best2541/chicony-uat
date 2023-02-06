@@ -1,17 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 
 // components
 
 import TableDropdown from "components/Dropdowns/TableDropdown.js";
 import { Link } from "react-router-dom";
-import { get } from "components/Api";
+import { get, post } from "components/Api";
 
-export default function AccountTable({ color, datas, setDatas }) {
+export default function AccountTable({ color, datas, setDatas, setSearch }) {
   const [page, setPage] = useState(1)
-  const autoStaff = () => {
-    get(`${process.env.REACT_APP_API}/admin/autostaff`)
-      .then(result => window.location.reload())
+  const importRef = useRef()
+  const autoStaff = (event) => {
+    const formData = new FormData()
+    formData.append('file', event.target.files[0])
+
+    post(`${process.env.REACT_APP_API}/admin/staffimport`, formData)
+      .then(result => {
+        if (!result.data.err) {
+          alert('Success')
+          window.location.reload()
+        } else {
+          alert('Fail')
+        }
+      })
+  }
+
+  const searchChange = (event) => {
+    const { value } = event.target
+    setSearch(value)
   }
   return (
     <>
@@ -43,10 +59,11 @@ export default function AccountTable({ color, datas, setDatas }) {
               <button
                 className="bg-yellow-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
                 type="button"
-                onClick={() => autoStaff()}
+                onClick={() => importRef.current.click()}
               >
-                Auto add
+                Import employee
               </button>
+              <input className="hidden" type='file' ref={importRef} onChange={autoStaff} accept=".xlsx, .xls, .csv" />
             </div>
           </div>
         </div>
@@ -81,6 +98,7 @@ export default function AccountTable({ color, datas, setDatas }) {
                   }
                 >
                   account
+                  <input type='text' className="input-text" placeholder="ค้นหา" onChange={searchChange} />
                 </th>
                 <th
                   className={
@@ -126,14 +144,16 @@ export default function AccountTable({ color, datas, setDatas }) {
               {datas.slice((page - 1) * 15, ((page * 15))).map(data => (
                 <tr>
                   <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
-                    <span
-                      className={
-                        "ml-3 font-bold " +
-                        +(color === "light" ? "text-blueGray-600" : "text-white")
-                      }
-                    >
-                      {data.username}
-                    </span>
+                    <Link to={`/admin/slip/${data.username}`}>
+                      <a href="#"
+                        className={
+                          "ml-3 font-bold " +
+                          +(color === "light" ? "text-blueGray-600" : "text-white")
+                        }
+                      >
+                        {data.username}
+                      </a>
+                    </Link>
                   </th>
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-center">
                     {data.phone}
@@ -142,7 +162,7 @@ export default function AccountTable({ color, datas, setDatas }) {
                     {data.id}
                   </td>
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-center">
-                    {new Date(data.create_at).toLocaleDateString('th')}
+                    {new Date(data.start_date).toLocaleDateString('th')}
                   </td>
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
                     <TableDropdown username={data.username} setDatas={setDatas} />

@@ -102,7 +102,7 @@ export default function Register() {
                       className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                       htmlFor="grid-password"
                     >
-                      เลขที่บัตรประชาชน
+                      เลขประจำตัวประชาชน
                     </label>
                     <input
                       name="id"

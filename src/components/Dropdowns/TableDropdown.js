@@ -18,18 +18,18 @@ const NotificationDropdown = ({ username, setDatas }) => {
   };
   const resetPassword = (event) => {
     let newPassword = prompt('New Password', 'password')
-    window.confirm(`User : ${username} \nNew Password : ${newPassword}`)
-    if (newPassword)
-      post(`${process.env.REACT_APP_API}/admin/resetpassword`, {
-        password: newPassword,
-        username: username
-      }).then(result => {
-        if (!result.data.err) {
-          alert('เรียบร้อย')
-        } else {
-          alert('ไม่สำเร็จ')
-        }
-      })
+    if (newPassword && newPassword != null)
+      if (window.confirm(`User : ${username} \nNew Password : ${newPassword}`))
+        post(`${process.env.REACT_APP_API}/admin/resetpassword`, {
+          password: newPassword,
+          username: username
+        }).then(result => {
+          if (!result.data.err) {
+            alert('เรียบร้อย')
+          } else {
+            alert('ไม่สำเร็จ')
+          }
+        })
   }
   const deleteClick = () => {
     post(`${process.env.REACT_APP_API}/admin/delete/${username}`)

@@ -69,9 +69,9 @@ export default function Login() {
                       onChange={inputChange}
                     />
                   </div>
-                  <a href="/auth/adminlogin" className="text-blueGray-600 flex justify-center underline text-xs font-bold hover:underline">
+                  {/* <a href="/auth/adminlogin" className="text-blueGray-600 flex justify-center underline text-xs font-bold hover:underline">
                     are you admin?
-                  </a>
+                  </a> */}
                   <div>
                     {/* <label className="inline-flex items-center cursor-pointer">
                       <input

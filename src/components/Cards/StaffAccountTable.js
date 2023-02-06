@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { useHistory, useParams } from 'react-router-dom'
 
 // components
 
@@ -10,37 +11,46 @@ import axios from "axios";
 
 export default function AccountTable({ color }) {
   const [datas, setDatas] = useState([])
+  const { id } = useParams()
 
-  const exportClick = (type, date) => {
-    axios.post(`${process.env.REACT_APP_API}/staff/slip`, {
-      type: type,
-      date: date
-    }, {
-      headers: {
-        authorization: `bearer ${window.localStorage.getItem('token')}`
-      },
-      responseType: 'blob'
-    })
-      .then(result => {
-        if (!result.data.err) {
-          const href = URL.createObjectURL(result.data);
-          const link = document.createElement('a');
-          link.href = href;
-          link.setAttribute('download', 'demo.xlsx'); //or any other extension
-          document.body.appendChild(link);
-          link.click();
+  const exportClick = async (type, date) => {
+    let DATE = await prompt('วันที่จ่าย :', `1/${new Date().getMonth() + 1}/${new Date().getFullYear()}`)
+    if (DATE)
+      if (window.confirm(`ยืนยัน วันที่จ่าย : ${DATE}`)) {
+        axios.post(`${process.env.REACT_APP_API}/staff/slip?username=${id}`, {
+          type: type,
+          date: date,
+          paymentDate: DATE
+        }, {
+          headers: {
+            authorization: `bearer ${window.localStorage.getItem('token')}`
+          },
+          responseType: 'blob'
+        })
+          .then(result => {
+            if (!result.data.err) {
+              const href = URL.createObjectURL(result.data);
+              const link = document.createElement('a');
+              link.href = href;
+              link.setAttribute('download', 'demo.pdf'); //or any other extension
+              document.body.appendChild(link);
+              link.click();
 
-          // clean up "a" element & remove ObjectURL
-          document.body.removeChild(link);
-          URL.revokeObjectURL(href);
-        }
-      })
+              // clean up "a" element & remove ObjectURL
+              document.body.removeChild(link);
+              URL.revokeObjectURL(href);
+            }
+          })
+      }
   }
   useEffect(() => {
-    get(`${process.env.REACT_APP_API}/staff/index`)
+    get(`${process.env.REACT_APP_API}/staff/index?username=${id}`)
       .then(result => {
         if (!result.data.err) {
           setDatas(result.data.slip)
+        } else {
+          alert(result.data.err)
+          window.location.href = '/staff/settings'
         }
       })
   }, [])
@@ -63,14 +73,9 @@ export default function AccountTable({ color }) {
               >
 
               </h3>
-              <Link to={'/admin/register'}>
-                <button
-                  className="bg-lightBlue-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
-                  type="button"
-                >
-                  EXPORT
-                </button>
-              </Link>
+              <h1 className="font-bold">
+                Salary {id}
+              </h1>
             </div>
           </div>
         </div>
