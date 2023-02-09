@@ -1,5 +1,4 @@
 import axios from "axios";
-import { get } from "components/Api";
 import { post } from "components/Api";
 import React, { useRef, useEffect, useState } from "react";
 
