@@ -91,7 +91,7 @@ export default function CardSettings() {
             <button
               className=" text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
               style={{ 'backgroundColor': 'green' }}
-              onClick={() => sendingEmail(`${new Date().getMonth() == 0 ? new Date().getFullYear() - 1 + '/' + '12' : new Date().getFullYear() + '/0' + new Date().getMonth() < 10 ? `0${parseInt(new Date().getMonth()) + 1}` : new Date().getFullYear() + '/' + new Date().getMonth()}`)}
+              onClick={() => sendingEmail(`${new Date().getMonth() == 0 ? new Date().getFullYear() - 1 + '/12' : new Date().getMonth() < 10 ? new Date().getFullYear() + '/' + `0${parseInt(new Date().getMonth())}` : new Date().getFullYear() + '/' + new Date().getMonth()}`)}
             >
               Send Salary {`${new Date().getMonth() == 0 ? new Date().getFullYear() - 1 + '/12' : new Date().getMonth() < 10 ? new Date().getFullYear() + '/' + `0${parseInt(new Date().getMonth())}` : new Date().getFullYear() + '/' + new Date().getMonth()}`}
             </button>

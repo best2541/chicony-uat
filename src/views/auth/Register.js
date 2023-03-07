@@ -97,7 +97,7 @@ export default function Register() {
                     />
                   </div>
 
-                  <div className="relative w-full mb-3">
+                  {/* <div className="relative w-full mb-3">
                     <label
                       className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                       htmlFor="grid-password"
@@ -110,8 +110,8 @@ export default function Register() {
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       onChange={inputChange}
                     />
-                  </div>
-                  <div className="relative w-full mb-3">
+                  </div> */}
+                  {/* <div className="relative w-full mb-3">
                     <label
                       className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                       htmlFor="grid-password"
@@ -124,8 +124,8 @@ export default function Register() {
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       onChange={inputChange}
                     />
-                  </div>
-                  <div className="relative w-full mb-3">
+                  </div> */}
+                  {/* <div className="relative w-full mb-3">
                     <label
                       className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                       htmlFor="grid-password"
@@ -135,6 +135,20 @@ export default function Register() {
                     <input
                       name="bank"
                       type="text"
+                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      onChange={inputChange}
+                    />
+                  </div> */}
+                  <div className="relative w-full mb-3">
+                    <label
+                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                      htmlFor="grid-password"
+                    >
+                      วันที่เริ่มงาน
+                    </label>
+                    <input
+                      name="start_date"
+                      type="date"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       onChange={inputChange}
                     />
